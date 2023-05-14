@@ -1,0 +1,23 @@
+# Visual Studio files
+*.suo
+*.user
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+bin/
+obj/
+
+# NuGet packages
+*.nupkg
+packages/
+
+# Resharper
+_ReSharper.*
+
+# Visual Studio Code
+.vscode/
+
+# Miscellaneous
+Thumbs.db
