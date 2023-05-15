@@ -4,6 +4,7 @@ using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace integrating_activity_01
 {
@@ -62,10 +63,31 @@ namespace integrating_activity_01
             Person selectedPerson = People.Find(el => el.Dni == dni);
             return selectedPerson;
         }
+        public Car GetCarByPlate(string plate)
+        {
+            Car selectedCar = Cars.Find(el => el.Plate == plate);
+            return selectedCar;
+        }
         public string DeletePerson(int index)
         {
-            People.RemoveAt(index);
-            return "Person was deleted";
+            try
+            {
+                Person selectedPerson = People.ElementAt(index);
+                if (selectedPerson.OwnedCars.Count > 0)
+                {
+                    throw new Exception("You can not delete a person with cars");
+                }
+                else
+                {
+                    People.RemoveAt(index);
+                    return "Person was deleted";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return "Person was not deleted";
+            }
         }
         public string DeleteCar(int index)
         {
@@ -87,6 +109,45 @@ namespace integrating_activity_01
             List<Car> ownedCars = new List<Car>();
             ownedCars = Cars.FindAll(el => el.OwnerDni == ownerDni);
             return ownedCars;
+        }
+        public string UpdatePerson(int index, Person person)
+        {
+            Person newPerson = new Person(person);
+            newPerson.OwnedCars = People[index].OwnedCars;
+
+            Cars.ForEach(el =>
+            {
+                if (el.OwnerDni == People[index].Dni)
+                {
+                    el.OwnerDni = newPerson.Dni;
+                }
+            });
+
+            People[index] = newPerson;
+
+            return "Person updated";
+        }
+        public string UpdateCar(int index, Car car)
+        {
+            Car newCar = new Car(car);
+
+            if (Cars[index].OwnerDni != "")
+            {
+                newCar.OwnerDni = Cars[index].OwnerDni;
+
+                Person selectedPerson = People.Find(el => el.Dni == newCar.OwnerDni);
+                selectedPerson.OwnedCars.ForEach(el =>
+                {
+                    if (el.Plate == Cars[index].Plate)
+                    {
+                        el = newCar;
+                    }
+                });
+            }
+
+            Cars[index] = newCar;
+
+            return "Car updated";
         }
         #endregion
 

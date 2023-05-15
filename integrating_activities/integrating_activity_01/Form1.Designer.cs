@@ -59,6 +59,11 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.buttonUpdatePerson = new System.Windows.Forms.Button();
+            this.buttonUpdateCar = new System.Windows.Forms.Button();
+            this.buttonDummyPeopleLoad = new System.Windows.Forms.Button();
+            this.buttonDummyCarsLoad = new System.Windows.Forms.Button();
+            this.labelTotalCarsValue = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPeople)).BeginInit();
             this.groupBoxPerson.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCars)).BeginInit();
@@ -69,7 +74,7 @@
             // 
             // buttonAddCar
             // 
-            this.buttonAddCar.Location = new System.Drawing.Point(377, 708);
+            this.buttonAddCar.Location = new System.Drawing.Point(629, 554);
             this.buttonAddCar.Name = "buttonAddCar";
             this.buttonAddCar.Size = new System.Drawing.Size(240, 23);
             this.buttonAddCar.TabIndex = 0;
@@ -79,9 +84,9 @@
             // 
             // buttonAddPerson
             // 
-            this.buttonAddPerson.Location = new System.Drawing.Point(12, 708);
+            this.buttonAddPerson.Location = new System.Drawing.Point(629, 310);
             this.buttonAddPerson.Name = "buttonAddPerson";
-            this.buttonAddPerson.Size = new System.Drawing.Size(127, 23);
+            this.buttonAddPerson.Size = new System.Drawing.Size(240, 23);
             this.buttonAddPerson.TabIndex = 1;
             this.buttonAddPerson.Text = "Agregar persona";
             this.buttonAddPerson.UseVisualStyleBackColor = true;
@@ -152,9 +157,9 @@
             this.groupBoxPerson.Controls.Add(this.label2);
             this.groupBoxPerson.Controls.Add(this.textBoxPersonSurname);
             this.groupBoxPerson.Controls.Add(this.label1);
-            this.groupBoxPerson.Location = new System.Drawing.Point(12, 551);
+            this.groupBoxPerson.Location = new System.Drawing.Point(629, 153);
             this.groupBoxPerson.Name = "groupBoxPerson";
-            this.groupBoxPerson.Size = new System.Drawing.Size(127, 151);
+            this.groupBoxPerson.Size = new System.Drawing.Size(113, 151);
             this.groupBoxPerson.TabIndex = 9;
             this.groupBoxPerson.TabStop = false;
             this.groupBoxPerson.Text = "Nueva persona:";
@@ -179,7 +184,7 @@
             this.groupBoxCar.Controls.Add(this.label5);
             this.groupBoxCar.Controls.Add(this.textBoxModel);
             this.groupBoxCar.Controls.Add(this.label6);
-            this.groupBoxCar.Location = new System.Drawing.Point(377, 551);
+            this.groupBoxCar.Location = new System.Drawing.Point(629, 397);
             this.groupBoxCar.Name = "groupBoxCar";
             this.groupBoxCar.Size = new System.Drawing.Size(240, 151);
             this.groupBoxCar.TabIndex = 10;
@@ -271,7 +276,7 @@
             this.dataGridViewFullCars.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewFullCars.Location = new System.Drawing.Point(12, 395);
             this.dataGridViewFullCars.Name = "dataGridViewFullCars";
-            this.dataGridViewFullCars.Size = new System.Drawing.Size(605, 150);
+            this.dataGridViewFullCars.Size = new System.Drawing.Size(605, 240);
             this.dataGridViewFullCars.TabIndex = 12;
             // 
             // dataGridViewOwnedCars
@@ -284,21 +289,21 @@
             // 
             // buttonDeletePerson
             // 
-            this.buttonDeletePerson.Location = new System.Drawing.Point(12, 737);
+            this.buttonDeletePerson.Location = new System.Drawing.Point(629, 339);
             this.buttonDeletePerson.Name = "buttonDeletePerson";
-            this.buttonDeletePerson.Size = new System.Drawing.Size(127, 23);
+            this.buttonDeletePerson.Size = new System.Drawing.Size(240, 23);
             this.buttonDeletePerson.TabIndex = 13;
-            this.buttonDeletePerson.Text = "Borrar persona";
+            this.buttonDeletePerson.Text = "Borrar persona seleccionada";
             this.buttonDeletePerson.UseVisualStyleBackColor = true;
             this.buttonDeletePerson.Click += new System.EventHandler(this.buttonDeletePerson_Click);
             // 
             // buttonDeleteCar
             // 
-            this.buttonDeleteCar.Location = new System.Drawing.Point(377, 737);
+            this.buttonDeleteCar.Location = new System.Drawing.Point(629, 583);
             this.buttonDeleteCar.Name = "buttonDeleteCar";
             this.buttonDeleteCar.Size = new System.Drawing.Size(240, 23);
             this.buttonDeleteCar.TabIndex = 14;
-            this.buttonDeleteCar.Text = "Borrar auto";
+            this.buttonDeleteCar.Text = "Borrar auto seleccionado";
             this.buttonDeleteCar.UseVisualStyleBackColor = true;
             this.buttonDeleteCar.Click += new System.EventHandler(this.buttonDeleteCar_Click);
             // 
@@ -348,11 +353,65 @@
             this.label12.TabIndex = 19;
             this.label12.Text = "Autos y dueños";
             // 
+            // buttonUpdatePerson
+            // 
+            this.buttonUpdatePerson.Location = new System.Drawing.Point(629, 368);
+            this.buttonUpdatePerson.Name = "buttonUpdatePerson";
+            this.buttonUpdatePerson.Size = new System.Drawing.Size(240, 23);
+            this.buttonUpdatePerson.TabIndex = 20;
+            this.buttonUpdatePerson.Text = "Modificar persona seleccionada";
+            this.buttonUpdatePerson.UseVisualStyleBackColor = true;
+            this.buttonUpdatePerson.Click += new System.EventHandler(this.buttonUpdatePerson_Click);
+            // 
+            // buttonUpdateCar
+            // 
+            this.buttonUpdateCar.Location = new System.Drawing.Point(629, 612);
+            this.buttonUpdateCar.Name = "buttonUpdateCar";
+            this.buttonUpdateCar.Size = new System.Drawing.Size(240, 23);
+            this.buttonUpdateCar.TabIndex = 21;
+            this.buttonUpdateCar.Text = "Modificar auto seleccionado";
+            this.buttonUpdateCar.UseVisualStyleBackColor = true;
+            this.buttonUpdateCar.Click += new System.EventHandler(this.buttonUpdateCar_Click);
+            // 
+            // buttonDummyPeopleLoad
+            // 
+            this.buttonDummyPeopleLoad.Location = new System.Drawing.Point(623, 35);
+            this.buttonDummyPeopleLoad.Name = "buttonDummyPeopleLoad";
+            this.buttonDummyPeopleLoad.Size = new System.Drawing.Size(119, 112);
+            this.buttonDummyPeopleLoad.TabIndex = 22;
+            this.buttonDummyPeopleLoad.Text = "Carga prueba personas";
+            this.buttonDummyPeopleLoad.UseVisualStyleBackColor = true;
+            this.buttonDummyPeopleLoad.Click += new System.EventHandler(this.buttonDummyPeopleLoad_Click);
+            // 
+            // buttonDummyCarsLoad
+            // 
+            this.buttonDummyCarsLoad.Location = new System.Drawing.Point(748, 35);
+            this.buttonDummyCarsLoad.Name = "buttonDummyCarsLoad";
+            this.buttonDummyCarsLoad.Size = new System.Drawing.Size(121, 112);
+            this.buttonDummyCarsLoad.TabIndex = 23;
+            this.buttonDummyCarsLoad.Text = "Carga prueba personas";
+            this.buttonDummyCarsLoad.UseVisualStyleBackColor = true;
+            this.buttonDummyCarsLoad.Click += new System.EventHandler(this.buttonDummyCarsLoad_Click);
+            // 
+            // labelTotalCarsValue
+            // 
+            this.labelTotalCarsValue.AutoSize = true;
+            this.labelTotalCarsValue.Location = new System.Drawing.Point(748, 153);
+            this.labelTotalCarsValue.Name = "labelTotalCarsValue";
+            this.labelTotalCarsValue.Size = new System.Drawing.Size(78, 13);
+            this.labelTotalCarsValue.TabIndex = 24;
+            this.labelTotalCarsValue.Text = "Valor de autos:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(650, 853);
+            this.ClientSize = new System.Drawing.Size(943, 672);
+            this.Controls.Add(this.labelTotalCarsValue);
+            this.Controls.Add(this.buttonDummyCarsLoad);
+            this.Controls.Add(this.buttonDummyPeopleLoad);
+            this.Controls.Add(this.buttonUpdateCar);
+            this.Controls.Add(this.buttonUpdatePerson);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
@@ -416,6 +475,11 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button buttonUpdatePerson;
+        private System.Windows.Forms.Button buttonUpdateCar;
+        private System.Windows.Forms.Button buttonDummyPeopleLoad;
+        private System.Windows.Forms.Button buttonDummyCarsLoad;
+        private System.Windows.Forms.Label labelTotalCarsValue;
     }
 }
 

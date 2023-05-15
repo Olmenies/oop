@@ -78,11 +78,47 @@ namespace integrating_activity_01
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
+        private void buttonUpdatePerson_Click(object sender, EventArgs e)
+        {
+            if (isInputValid(groupBoxPerson))
+            {
+                int personRowIndex = dataGridViewPeople.SelectedRows[0].Index;
+                Person newPerson = new Person(textBoxPersonDni.Text, textBoxPersonName.Text, textBoxPersonSurname.Text);
+                businessManager.UpdatePerson(personRowIndex, newPerson);
+                RefreshPeopleDataTable(businessManager.GetPeople());
+                RefreshFullCarsDataTable(businessManager.GetCars());
+            }
+        }
+        private void buttonUpdateCar_Click(object sender, EventArgs e)
+        {
+            if (isInputValid(groupBoxCar))
+            {
+                if (dataGridViewPeople.SelectedRows.Count > 0)
+                {
+                    int carRowIndex = dataGridViewCars.SelectedRows[0].Index;
+                    Car newCar = new Car(textBoxPlate.Text, textBoxManufacturer.Text, textBoxModel.Text, textBoxYear.Text, Int32.Parse(textBoxPrice.Text));
+                    businessManager.UpdateCar(carRowIndex, newCar);
+                    RefreshCarsDataTable(businessManager.GetCars());
+                    RefreshFullCarsDataTable(businessManager.GetCars());
+
+                    DataGridViewRow selectedRow = dataGridViewPeople.SelectedRows[0];
+                    List<Car> ownedCars = businessManager.GetOwnedCars(businessManager.GetPersonByIndex(selectedRow.Index).Dni);
+                    RefreshCarsOwnedDataTable(ownedCars);
+                }
+            }
+        }
+
         private void dataGridViewPeople_SelectionChanged(object sender, EventArgs e)
         {
-            int selectedRow = dataGridViewPeople.SelectedRows[0].Index;
-            List<Car> ownedCars = businessManager.GetOwnedCars(businessManager.GetPersonByIndex(selectedRow).Dni);
-            RefreshCarsOwnedDataTable(ownedCars);
+            if (dataGridViewPeople.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = dataGridViewPeople.SelectedRows[0];
+                List<Car> ownedCars = businessManager.GetOwnedCars(businessManager.GetPersonByIndex(selectedRow.Index).Dni);
+
+                RefreshCarsOwnedDataTable(ownedCars);
+
+                HandleTotalValueLabel(selectedRow.Index);
+            }
         }
         private void buttonBind_Click(object sender, EventArgs e)
         {
@@ -95,16 +131,28 @@ namespace integrating_activity_01
                 RefreshCarsOwnedDataTable(businessManager.GetOwnedCars(businessManager.GetPersonByIndex(selectedPersonRow.Index).Dni));
                 RefreshFullCarsDataTable(businessManager.GetCars());
 
-
+                HandleTotalValueLabel(selectedPersonRow.Index);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void buttonDummyPeopleLoad_Click(object sender, EventArgs e)
+        {
+            AddDummyPeople();
+            RefreshPeopleDataTable(businessManager.GetPeople());
+            RefreshFullCarsDataTable(businessManager.GetCars());
+        }
+        private void buttonDummyCarsLoad_Click(object sender, EventArgs e)
+        {
+            AddDummyCars();
+            RefreshCarsDataTable(businessManager.GetCars());
+            RefreshFullCarsDataTable(businessManager.GetCars());
         }
         #endregion
 
         #region Methods
         private bool isDniValid(string dni)
         {
-
             Regex dniRegex = new Regex(@"^\d{2}\.\d{3}\.\d{3}$");
             if (dniRegex.IsMatch(dni))
             {
@@ -112,20 +160,38 @@ namespace integrating_activity_01
             }
             return false;
         }
+        private bool isDniDuplicated(string dni)
+        {
+            if (businessManager.GetPersonByDni(dni) != null)
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool isPlateDuplicated(string plate)
+        {
+            if (businessManager.GetCarByPlate(plate) != null)
+            {
+                return true;
+            }
+            return false;
+
+        }
         private bool isInputValid(GroupBox groupBox)
         {
             try
             {
                 foreach (Control control in groupBox.Controls)
                 {
-                    if (control is TextBox && control.Text == "")
-                    {
-                        throw new Exception("Input not valid");
-                    }
                     if (control is TextBox)
                     {
                         if (control.Text == "") throw new Exception("Input can not be empty");
-                        else if (control == textBoxPersonDni && !isDniValid(textBoxPersonDni.Text)) throw new Exception("DNI format is not valid");
+                        else if (control == textBoxPlate && isPlateDuplicated(textBoxPlate.Text)) throw new Exception("Car plate can not be duplicated");
+                        else if (control == textBoxPersonDni)
+                        {
+                            if (!isDniValid(textBoxPersonDni.Text)) throw new Exception("DNI format is not valid");
+                            if (isDniDuplicated(textBoxPersonDni.Text)) throw new Exception("DNI can not be duplicated");
+                        }
                     }
                 }
                 return true;
@@ -313,6 +379,34 @@ namespace integrating_activity_01
                 fullCarsDataTable.Rows.Add(dataRow);
             }
             return "PeopleDataTable refreshed";
+        }
+
+        private void HandleTotalValueLabel(int index)
+        {
+            List<Car> ownedCars = businessManager.GetOwnedCars(businessManager.GetPersonByIndex(index).Dni);
+            decimal totalCarsValue = 0;
+            ownedCars.ForEach(el => totalCarsValue += el.Price);
+
+            labelTotalCarsValue.Text = $"Valor de autos: {totalCarsValue}";
+        }
+
+        private void AddDummyPeople()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Person dummyPerson = new Person($"{i}{i}.{i}{i}{i}.{i}{i}{i}", $"{i}{i}{i}", $"{i}{i}{i}");
+                businessManager.AddPerson(dummyPerson);
+            }
+
+        }
+        private void AddDummyCars()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Car dummyCar = new Car($"{i}{i}{i}", $"{i}{i}{i}", $"{i}{i}{i}", $"{i}{i}{i}", i);
+                businessManager.AddCar(dummyCar);
+            }
+
         }
         #endregion
     }

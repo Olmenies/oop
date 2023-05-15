@@ -19,7 +19,7 @@ namespace integrating_activity_01
         public string Dni { get { return dni; } set { dni = value; } }
         public string Name { get { return name; } set { name = value; } }
         public string Surname { get { return surname; } set { surname = value; } }
-        public List<Car> OwnedCars { get { return ownedCars; } private set { ownedCars = value; } }
+        public List<Car> OwnedCars { get { return ownedCars; } set { ownedCars = value; } }
         #endregion
 
         #region Constructors
